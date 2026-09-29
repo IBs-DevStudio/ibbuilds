@@ -1,0 +1,81 @@
+---
+title: "Engineering Sub-Second Voice AI: Inside Cogniva"
+date: "2026-03-01"
+description: "How we cut response latency from 2.8s to 850ms in a voice-first AI learning platform using OpenAI streaming, Vapi, and WebSocket callbacks."
+tags: ["Voice AI", "OpenAI", "Vapi", "React", "TypeScript"]
+---
+
+When building **Cogniva**, our goal was simple yet technically demanding: build a voice-first AI learning platform that feels like conversing with an empathetic human tutor in real time.
+
+In traditional chatbots, a 2 to 3-second delay between prompt and answer is tolerated. In voice conversations, a 2-second delay feels like an eternity. Users start talking over the AI, assuming the connection dropped.
+
+Here is how we shaved **70% of response latency** (from 2.8s down to 850ms) and achieved a 95% callback success rate.
+
+---
+
+## The Latency Breakdown
+
+A conversational voice AI pipeline involves four distinct stages:
+
+1. **Speech-to-Text (STT)**: Transcribing user speech to text.
+2. **LLM Generation**: Sending the transcript to the model (OpenAI GPT-4o) and generating tokens.
+3. **Text-to-Speech (TTS)**: Synthesizing output audio from generated text.
+4. **Audio Playback**: Streaming synthesized audio packets back to the client over WebSockets / WebRTC.
+
+In naive architectures, these steps execute sequentially:
+
+```
+[User speaks] → [Wait for silence] → [STT completes (600ms)] → 
+[LLM full response (1400ms)] → [TTS completes (800ms)] → [Playback] = ~2.8s total
+```
+
+## Streaming Token Chunks into Audio Synthesis
+
+The biggest architectural unlock was overlapping the pipeline stages.
+
+Instead of waiting for the LLM to complete generating a full paragraph, we stream token deltas directly into the audio synthesizer the moment punctuation boundaries (periods, commas, question marks) are encountered.
+
+```ts
+// Streaming buffer: flush chunks on sentence boundaries to minimize TTS latency
+let sentenceBuffer = ""
+const SENTENCE_ENDINGS = /[.?!]\s*$/
+
+for await (const chunk of openaiStream) {
+  const token = chunk.choices[0]?.delta?.content || ""
+  sentenceBuffer += token
+
+  if (SENTENCE_ENDINGS.test(sentenceBuffer)) {
+    vapiClient.sendAudioChunk({ text: sentenceBuffer.trim() })
+    sentenceBuffer = ""
+  }
+}
+```
+
+By dispatching the first sentence (e.g. *"Great question!"*) directly to TTS while the LLM is still drafting the subsequent explanation, the user hears audio playback in under **850 milliseconds**.
+
+---
+
+## Frontend State with React Hooks & Context API
+
+Supporting **5+ interactive learning modes** (Flashcards, Socratic Inquiry, Deep Coding Walkthrough, Quiz Arena, and Open Conversation) required an adaptable UI.
+
+We architected a unified audio session state machine using React Hooks and Context API in TypeScript:
+
+```ts
+interface VoiceSessionState {
+  mode: "socratic" | "quiz" | "flashcard" | "open" | "code"
+  status: "idle" | "listening" | "thinking" | "speaking"
+  latencyMs: number
+  transcript: Message[]
+}
+```
+
+This modular component hierarchy decoupled voice pipeline streaming from UI rendering, reducing our frontend development overhead by **40%**.
+
+---
+
+## Key Takeaways
+
+1. **Perceptual speed beats benchmark speed**: First-audio latency matters 10x more than total generation completion time.
+2. **Sentence chunking is essential**: Never wait for complete LLM generation before starting speech synthesis.
+3. **Strict state boundaries prevent audio stutter**: Keeping audio streaming primitives outside the heavy component re-render tree keeps the framerate locked at 60 FPS.

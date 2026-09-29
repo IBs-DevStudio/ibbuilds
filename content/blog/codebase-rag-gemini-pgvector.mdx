@@ -1,0 +1,66 @@
+---
+title: "Building GitIntellect: Semantic Codebase RAG with Gemini & pgvector"
+date: "2026-02-15"
+description: "How we built a codebase AI engine using AST chunking, Gemini embeddings, and PostgreSQL pgvector for sub-200ms semantic code retrieval."
+tags: ["RAG", "PostgreSQL", "pgvector", "Gemini", "Next.js"]
+---
+
+Natural language search over large GitHub repositories is one of the most useful AI developer workflows. When building **GitIntellect**, our objective was to let developers query multi-file codebases in plain English and receive accurate, context-aware answers with sub-200ms retrieval speed.
+
+Here is what we learned building our RAG pipeline with **Next.js**, **Gemini embeddings**, and **PostgreSQL pgvector**.
+
+---
+
+## Why Naive Chunking Fails on Code
+
+Most text RAG tutorials advocate splitting documents into fixed 500-token chunks with an overlap of 50 tokens. 
+
+Applying this strategy to source code results in disaster:
+
+- A function definition gets split across two chunks, separating parameters from the implementation.
+- Import statements lose association with the classes that utilize them.
+- Contextual scope (module name, file path, interfaces implemented) is stripped away.
+
+When retrieval hits a fragmented chunk, the LLM hallucinates because critical context was severed.
+
+---
+
+## AST-Aware Chunking & Metadata Enrichment
+
+To solve this, GitIntellect parses files into **Abstract Syntax Trees (AST)** before vectorization:
+
+1. **Unit-level chunking**: We extract complete atomic units (individual functions, classes, type declarations).
+2. **Metadata injection**: Each chunk is prepended with its structural signature and module context.
+
+```sql
+-- Schema for vectorized codebase chunks in PostgreSQL with pgvector
+CREATE TABLE code_chunks (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  repo_id VARCHAR(255) NOT NULL,
+  file_path TEXT NOT NULL,
+  symbol_name TEXT,
+  chunk_type VARCHAR(50), -- 'function', 'class', 'interface'
+  content TEXT NOT NULL,
+  embedding vector(768)
+);
+
+CREATE INDEX ON code_chunks USING ivfflat (embedding vector_cosine_ops)
+WITH (lists = 100);
+```
+
+By indexing at 768-dimensional Gemini embeddings and creating IVFFlat indexes, cosine distance similarity queries run in **under 45 milliseconds** on databases containing tens of thousands of code chunks.
+
+---
+
+## Next.js Frontend with SSR & SSG
+
+For the web interface, we leveraged **Next.js** combining Server-Side Rendering (SSR) for dynamic repository queries with Static Site Generation (SSG) for static documentation and documentation templates.
+
+By keeping server components close to the database connection pool, query execution and streaming response rendering deliver answers directly to the user with **sub-200ms first-token latency**.
+
+---
+
+## Conclusion
+
+Effective AI systems over codebases do not rely on more complicated prompt engineering; they rely on **high-fidelity indexing**. When your embeddings respect the syntax and boundaries of the programming language, your RAG pipeline produces consistent, production-ready code answers.
+
