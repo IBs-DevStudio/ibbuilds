@@ -4,7 +4,7 @@ import { GeistMono } from 'geist/font/mono'
 import { MotionConfig } from 'framer-motion'
 import './globals.css'
 import { Analytics } from "@vercel/analytics/react"
-// Page metadata lives in /config/siteConfig.ts under `siteConfig.seo`.
+import HelloIntro from './components/HelloIntro'
 import { siteConfig } from '@/config/siteConfig'
 
 export const metadata: Metadata = {
@@ -25,6 +25,7 @@ export default function RootLayout({
         {/* `reducedMotion="user"` silences Framer Motion animations for users
             with prefers-reduced-motion enabled, in one place, for the whole tree. */}
         <MotionConfig reducedMotion="user">
+          <HelloIntro />
           {children}
         </MotionConfig>
         <Analytics />

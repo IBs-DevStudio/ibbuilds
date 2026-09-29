@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 
 const greetings = [
-  'Hello', 'नमस्ते', 'Bonjour', 'ನಮಸ್ಕಾರ',
-  'Hola', 'こんにちは', 'Ciao', '안녕하세요', 'Hello',
+  'Hello', 'नमस्ते', 'Bonjour',
+  'Hola', 'Ciao', 'Hello',
 ]
 
 export default function HelloIntro() {
@@ -14,7 +14,7 @@ export default function HelloIntro() {
 
   useEffect(() => {
     if (i < greetings.length - 1) {
-      const t = setTimeout(() => setI(i + 1), 450)
+      const t = setTimeout(() => setI(i + 1), 550)
       return () => clearTimeout(t)
     }
     const t = setTimeout(() => setShow(false), 700)
