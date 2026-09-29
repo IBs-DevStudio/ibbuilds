@@ -1,18 +1,4 @@
-/**
- * music.ts
- * ─────────────────────────────────────────────────────────────
- * Local tracks played by <MusicWidget />.
- *
- * 1. Drop your MP3 files into /public/music/
- * 2. Drop matching cover art into /public/music/covers/ (optional —
- *    falls back to /avatar.svg if you skip this)
- * 3. Add an entry below for each track.
- *
- * Only use tracks you have the rights to host (your own downloads
- * from royalty-free sources, music you own, or your own recordings).
- * Don't upload copyrighted commercial tracks to a public repo/site.
- * ─────────────────────────────────────────────────────────────
- */
+
 
 export interface Track {
   id: string
