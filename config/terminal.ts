@@ -59,10 +59,10 @@ export const terminal: TerminalConfig = {
     "• Vinayak IT Solutions Client Dashboards (Next.js, Tailwind, REST APIs)",
   ],
   skills: [
-    "Languages:   JavaScript (ES6+), TypeScript, Python, SQL, HTML5, CSS3",
+    "Languages:   JavaScript (ES6+), TypeScript, Python,HTML5, CSS3",
     "Frontend:    React.js, Next.js (SSR/SSG), Redux, Context API, Tailwind CSS",
     "Backend:     Node.js, Express.js, REST APIs, PostgreSQL, Prisma, Redis",
-    "AI & ML:     OpenAI, LangChain, Pinecone, Gemini, RAG Pipelines, pandas, NumPy",
+    "AI Tools:     OpenAI, LangChain, Pinecone, Gemini, RAG Pipelines",
     "Cloud/Dev:   Git (branching, PRs), Docker, AWS, GCP, CI/CD (GitHub Actions, Vercel)",
   ],
   experience: [

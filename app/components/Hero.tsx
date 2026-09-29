@@ -101,10 +101,10 @@ export default function Hero({ compact = false }: { compact?: boolean }) {
 
         <div>
           <p className="font-semibold text-white text-[12.5px] leading-tight">
-            50+
+            100+
           </p>
           <p className="font-mono text-[8.5px] uppercase tracking-wider text-[var(--text-muted)] mt-0.5">
-            AI Sessions
+            Personalised AI Sessions
           </p>
         </div>
 
@@ -119,10 +119,10 @@ export default function Hero({ compact = false }: { compact?: boolean }) {
 
         <div>
           <p className="font-semibold text-emerald-400 text-[12.5px] leading-tight">
-            &gt;30h/wk
+            -95%
           </p>
           <p className="font-mono text-[8.5px] uppercase tracking-wider text-[var(--text-muted)] mt-0.5">
-            Available
+            API latency
           </p>
         </div>
 
