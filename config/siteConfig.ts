@@ -89,7 +89,7 @@ export const siteConfig: SiteConfig = {
     lastName: "Banadar",
     fullName: "Ikram Banadar",
     initials: "IB",
-    role: "Freelance Full-Stack & AI Developer",
+    role: "Full-Stack Developer & AI Developer",
     shortRole: "Freelance Full-Stack & AI Developer",
     tagline:
       "Freelance Full-Stack Web & AI Developer on Upwork. B.Tech in CS (AI & ML). Building production AI SaaS platforms, voice-first systems, and high-performance web applications.",

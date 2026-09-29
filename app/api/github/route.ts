@@ -8,7 +8,7 @@ export async function GET() {
   try {
     const res = await fetch(
       `https://github-contributions-api.jogruber.de/v4/${siteConfig.social.githubUsername}?y=last`,
-      { next: { revalidate: 21600 } }
+      { next: { revalidate: 1800 } }
     )
     if (!res.ok) throw new Error("upstream error")
     const data = await res.json()

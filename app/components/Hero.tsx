@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { Twitter, Github, BookOpen, Linkedin, ArrowUpRight, Copy, Check } from 'lucide-react'
-// Text + social links come from /config/siteConfig.ts.
+
 import { siteConfig } from '@/config/siteConfig'
 
 function UpworkIcon({ size = 15 }: { size?: number }) {
