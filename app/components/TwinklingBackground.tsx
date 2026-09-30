@@ -159,8 +159,7 @@ export default function TwinklingBackground({
     startTime: number,
     sizeMult = 1.0
   ) => {
-    // Avoid duplicates on same cell at same time
-    const key = `${col},${row}`
+  
     const existing = sparklesRef.current.some(
       (s) => s.col === col && s.row === row && s.startTime <= startTime && s.startTime + s.duration > startTime
     )
@@ -231,9 +230,8 @@ export default function TwinklingBackground({
     window.addEventListener("touchmove", onTouchMove, { passive: true })
     return () => {
       window.removeEventListener("mousemove", onMouseMove)
-      window.removeEventListener("touchmove", touchMoveHandler)
+      window.removeEventListener("touchmove", onTouchMove)
     }
-    function touchMoveHandler() {}
   }, [interactive, mode])
 
   // Main canvas animation loop
