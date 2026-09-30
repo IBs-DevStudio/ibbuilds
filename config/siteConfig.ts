@@ -103,9 +103,9 @@ export const siteConfig: SiteConfig = {
   social: {
     github: "https://github.com/IBs-DevStudio",
     twitter: "https://x.com/IkramBanadar",
-    linkedin: "https://linkedin.com/in/ikrambanadar",
+    linkedin: "https://www.linkedin.com/in/ikrambanadarwebdev",
     leetcode: "https://leetcode.com/u/ikrambanadar04",
-    upwork: "https://www.upwork.com",
+    upwork: "https://www.upwork.com/freelancers/~013fb349334b6d27af?mp_source=share",
     blog: "/blog",
     githubUsername: "IBs-DevStudio",
     twitterHandle: "IkramBanadar",

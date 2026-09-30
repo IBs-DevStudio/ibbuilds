@@ -59,7 +59,7 @@ export default function MobileLayout({ posts }: { posts: PostMeta[] }) {
   }
 
   return (
-    <div className="desktop-bg" style={{ minHeight: "100dvh", color: "#f0f0f0" }}>
+    <div className="relative overflow-x-hidden" style={{ minHeight: "100dvh", color: "#f0f0f0", background: "transparent" }}>
 
       {/* Status bar */}
       <header

@@ -27,7 +27,7 @@ export default function Hero({ compact = false }: { compact?: boolean }) {
   return (
     <section className="px-6 pt-6 pb-5 flex flex-col h-full overflow-y-auto" style={{ minHeight: 0 }}>
 
-      {/* Name — edit siteConfig.personal.firstName / lastName */}
+     
       <div className="mb-4">
         <h1
           className="font-semibold tracking-tight text-white leading-[0.92] mb-2.5"
@@ -50,7 +50,7 @@ export default function Hero({ compact = false }: { compact?: boolean }) {
       {/* Action CTA Buttons */}
       <div className="flex items-center gap-2.5 mt-3.5 flex-wrap">
         <a
-          href={social.upwork || "https://www.upwork.com"}
+          href={social.upwork || "https://www.upwork.com/freelancers/~013fb349334b6d27af?mp_source=share"}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all group"
