@@ -4,7 +4,6 @@ import { GeistMono } from 'geist/font/mono'
 import { MotionConfig } from 'framer-motion'
 import './globals.css'
 import { Analytics } from "@vercel/analytics/react"
-import HelloIntro from './components/HelloIntro'
 import { siteConfig } from '@/config/siteConfig'
 
 export const metadata: Metadata = {
@@ -22,7 +21,7 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
       <body>
         <MotionConfig reducedMotion="user">
-          <HelloIntro />
+          
           {children}
         </MotionConfig>
         <Analytics />
