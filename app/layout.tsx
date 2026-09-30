@@ -25,11 +25,11 @@ export default function RootLayout({
         {/* `reducedMotion="user"` silences Framer Motion animations for users
             with prefers-reduced-motion enabled, in one place, for the whole tree. */}
         <MotionConfig reducedMotion="user">
-          <HelloIntro />
           {children}
         </MotionConfig>
         <Analytics />
       </body>
     </html>
+  
   )
 }

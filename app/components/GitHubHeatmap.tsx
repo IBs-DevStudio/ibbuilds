@@ -30,7 +30,7 @@ export default function GitHubHeatmap() {
   const dragControls = useDragControls()
 
   useEffect(() => {
-    fetch("/api/github")
+    fetch("/api/github", { cache: "no-store" })
       .then((r) => r.json())
       .then((d) => {
         setContributions(d.contributions ?? [])

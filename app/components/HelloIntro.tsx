@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 const greetings = [
   'Hello', 'नमस्ते', 'Bonjour',
-  'Hola', 'Ciao', 'Hello',
+  'Hola', 'Ciao', '<Wellcome/>',
 ]
 
 export default function HelloIntro() {
