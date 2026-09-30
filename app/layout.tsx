@@ -8,6 +8,7 @@ import HelloIntro from './components/HelloIntro'
 import { siteConfig } from '@/config/siteConfig'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ibbuilds.vercel.app'),
   title: siteConfig.seo.title,
   description: siteConfig.seo.description,
 }
@@ -18,18 +19,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    // The Geist variables are declared on <html> and the font-sans default
-    // is set via the body rule in globals.css — no need to duplicate a className here.
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
       <body>
-        {/* `reducedMotion="user"` silences Framer Motion animations for users
-            with prefers-reduced-motion enabled, in one place, for the whole tree. */}
         <MotionConfig reducedMotion="user">
+          <HelloIntro />
           {children}
         </MotionConfig>
         <Analytics />
       </body>
     </html>
-  
   )
 }
