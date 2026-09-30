@@ -5,7 +5,7 @@
 **A developer portfolio that looks and feels like a macOS desktop.**
 Draggable windows, a live dock, a working terminal, and an MDX blog.
 
-[![Live](https://img.shields.io/badge/Live-ibnix.vercel.app-black?style=for-the-badge&logo=vercel)](https://ibnix.vercel.app)
+[![Live](https://img.shields.io/badge/Live-ibbuilds.vercel.app-black?style=for-the-badge&logo=vercel)](https://ibnix.vercel.app)
 
 ![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)
 ![React](https://img.shields.io/badge/React-19-black?logo=react)
