@@ -1,9 +1,4 @@
-/**
- * Default Open Graph image — rendered at build time via Next's ImageResponse.
- * No external assets needed; Next serves the result at /opengraph-image.
- * Users who want a custom image can either edit this file or drop a static
- * PNG at app/opengraph-image.png (static file wins automatically).
- */
+
 import { ImageResponse } from "next/og"
 import { siteConfig } from "@/config/siteConfig"
 

@@ -90,11 +90,11 @@ export const siteConfig: SiteConfig = {
     fullName: "Ikram Banadar",
     initials: "IB",
     role: "Full-Stack Developer & AI Developer",
-    shortRole: "Freelance Full-Stack & AI Developer",
+    shortRole: "Full-Stack & AI Developer",
     tagline:
-      "Freelance Full-Stack Web & AI Developer on Upwork. B.Tech in CS (AI & ML). Building production AI SaaS platforms, voice-first systems, and high-performance web applications.",
+      "Full-Stack Web & AI Developer on Upwork. B.Tech in CS (AI & ML). Building production AI SaaS platforms, voice-first systems, and high-performance web applications.",
     location: "Belgaum, Karnataka, India",
-    age: "", // fill in if you want this shown, or leave blank to hide
+    age: "", 
     phone: "+91 9110451262",
     avatar: "/Avatar.jpeg",
     username: "IBs-DevStudio",
@@ -117,7 +117,7 @@ export const siteConfig: SiteConfig = {
     phone: "+91 9110451262",
     calendar: "",
     heading: "Let's Connect",
-    subheading: "Available for freelance contracts on Upwork, full-stack web apps, and AI engineering projects.",
+    subheading: "Available for full-time roles, freelance contracts on Upwork, full-stack web apps, and AI engineering projects.",
     rows: [
       { icon: "upwork",   href: "https://www.upwork.com",          label: "Upwork",      mono: "Available for Hire" },
       { icon: "mail",     href: "mailto:ikrambanadar04@gmail.com", label: "Email",       mono: "ikrambanadar04@gmail.com" },
@@ -129,8 +129,8 @@ export const siteConfig: SiteConfig = {
   },
 
   seo: {
-    title: "Ikram Banadar — Freelance Web & AI Developer",
-    description: "Portfolio of Ikram Banadar (IB) — Freelance Full-Stack Web & AI Developer on Upwork. B.Tech in CS (AI & ML).",
+    title: "Ikram Banadar — Full Stack Web & AI Developer",
+    description: "Portfolio of Ikram Banadar (IB) — Full-Stack Web & AI Developer on Upwork. B.Tech in CS (AI & ML).",
   },
 
   resumeLink: "https://github.com/IBs-DevStudio",

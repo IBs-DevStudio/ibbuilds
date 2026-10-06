@@ -1,14 +1,4 @@
-/**
- * MDXComponents.tsx
- * ─────────────────────────────────────────────────────────────
- * Styled replacements for the default HTML tags MDX renders into.
- * Passed to <MDXRemote components={…} /> so every post inherits
- * the portfolio's typography without repeating class names.
- *
- * Keeping this file small and tag-based keeps individual .mdx
- * files portable — authors write plain Markdown; styling lives here.
- * ─────────────────────────────────────────────────────────────
- */
+
 
 import type { MDXComponents } from "mdx/types"
 import Link from "next/link"

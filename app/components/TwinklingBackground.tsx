@@ -26,6 +26,7 @@ interface Sparkle {
   palette: ThemePalette
 }
 
+
 interface Wave {
   cx: number
   cy: number
@@ -37,8 +38,8 @@ interface Wave {
 
 interface ThemePalette {
   coreColor: string
-  glowColor: string // uses __A__ placeholder for alpha
-  glintColor: string // uses __A__ placeholder for alpha
+  glowColor: string 
+  glintColor: string 
 }
 
 const PALETTES: Record<string, ThemePalette> = {
@@ -122,6 +123,8 @@ export default function TwinklingBackground({
       }
     }
   }, [progress, mode])
+
+
 
   const triggerShockwave = (intensityMultiplier = 1.0) => {
     if (typeof window === "undefined") return

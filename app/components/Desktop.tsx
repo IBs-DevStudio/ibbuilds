@@ -21,7 +21,7 @@ import { siteConfig } from "@/config/siteConfig"
 import { windows, type WindowId } from "@/config/windows"
 import type { PostMeta } from "@/lib/posts"
 
-const KONAMI = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"]
+const KONAMI = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"]
 
 export default function Desktop({ posts }: { posts: PostMeta[] }) {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -93,12 +93,12 @@ export default function Desktop({ posts }: { posts: PostMeta[] }) {
   }
 
   const contextMenuItems: MenuItem[] = [
-    { label: "New Window",        shortcut: "⌘N", onClick: () => toggleWindow("about"),    dividerAfter: false },
-    { label: "Open Terminal",     shortcut: "⌘T", onClick: () => toggleWindow("terminal"), dividerAfter: true },
-    { label: "Replay Boot Animation",             onClick: () => { setIsLoaded(false); setLoadProgress(0) }, dividerAfter: false },
-    { label: "About this Portfolio",                onClick: () => setShowAboutOverlay(true), dividerAfter: false },
-    { label: "View Source",                         onClick: () => window.open(siteConfig.social.github, "_blank"), dividerAfter: true },
-    { label: "Contact",                             onClick: () => toggleWindow("contact") },
+    { label: "New Window", shortcut: "⌘N", onClick: () => toggleWindow("about"), dividerAfter: false },
+    { label: "Open Terminal", shortcut: "⌘T", onClick: () => toggleWindow("terminal"), dividerAfter: true },
+    { label: "Replay Boot Animation", onClick: () => { setIsLoaded(false); setLoadProgress(0) }, dividerAfter: false },
+    { label: "About this Portfolio", onClick: () => setShowAboutOverlay(true), dividerAfter: false },
+    { label: "View Source", onClick: () => window.open(siteConfig.social.github, "_blank"), dividerAfter: true },
+    { label: "Contact", onClick: () => toggleWindow("contact") },
   ]
 
   if (isMobile === null) {
@@ -286,12 +286,12 @@ export default function Desktop({ posts }: { posts: PostMeta[] }) {
                 style={{ borderTop: "1px solid rgba(255,255,255,0.08)", borderBottom: "1px solid rgba(255,255,255,0.08)" }}
               >
                 {[
-                  ["Runtime",    "Next.js 15 · React 19"],
-                  ["Language",   "TypeScript"],
-                  ["Styling",    "Tailwind CSS v4"],
-                  ["Animation",  "Framer Motion"],
-                  ["Font",       "Geist · Geist Mono"],
-                  ["Deployed",   "Vercel Edge Network"],
+                  ["Runtime", "Next.js 15 · React 19"],
+                  ["Language", "TypeScript"],
+                  ["Styling", "Tailwind CSS v4"],
+                  ["Animation", "Framer Motion"],
+                  ["Font", "Geist · Geist Mono"],
+                  ["Deployed", "Vercel Edge Network"],
                 ].map(([k, v]) => (
                   <div key={k} className="flex justify-between">
                     <span className="font-mono text-[10px]" style={{ color: "rgba(255,255,255,0.25)" }}>{k}</span>

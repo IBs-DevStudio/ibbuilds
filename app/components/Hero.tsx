@@ -42,7 +42,7 @@ export default function Hero({ compact = false }: { compact?: boolean }) {
 
       <div style={{ height: 1, background: "var(--separator)", marginBottom: 16 }} />
 
-      {/* Bio — edit siteConfig.personal.tagline */}
+      
       <p className="text-[12.5px] leading-[1.7]" style={{ color: "var(--text-secondary)" }}>
         {personal.tagline}
       </p>

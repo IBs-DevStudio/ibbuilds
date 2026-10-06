@@ -15,8 +15,8 @@ export const status: StatusConfig = {
   available: true,
   label: "Available Full Time",
   currently: [
-    { label: "Role",     value: "Freelance Web & AI Dev @ Upwork" },
-    { label: "Status",   value: "Open to contract (>30 hrs/wk)" },
-    { label: "Base",     value: "Belgaum, Karnataka, India" },
+    { label: "Role",     value: "Open to full-time roles" },
+    { label: "Status",   value: "Freelance Web & AI Dev @ Upwork" },
+    { label: "Base",     value: "Open to contract (>30 hrs/wk)" },
   ],
 }
