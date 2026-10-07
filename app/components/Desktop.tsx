@@ -15,7 +15,6 @@ import CalendarWidget from "./widgets/CalendarWidget"
 import VisitorWidget from "./widgets/VisitorWidget"
 import ThemeWidget from "./widgets/ThemeWidget"
 import { ContextMenu, MenuItem } from "./ContextMenu"
-import Preloader from "./Preloader"
 import TwinklingBackground from "./TwinklingBackground"
 import { siteConfig } from "@/config/siteConfig"
 import { windows, type WindowId } from "@/config/windows"
@@ -24,9 +23,7 @@ import type { PostMeta } from "@/lib/posts"
 const KONAMI = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"]
 
 export default function Desktop({ posts }: { posts: PostMeta[] }) {
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [loadProgress, setLoadProgress] = useState(0)
-  const [isMobile, setIsMobile] = useState<boolean | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
   const [openWindows, setOpenWindows] = useState<WindowId[]>(["about"])
   const [windowOrder, setWindowOrder] = useState<WindowId[]>(["about"])
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null)
@@ -37,7 +34,7 @@ export default function Desktop({ posts }: { posts: PostMeta[] }) {
   // Mobile detection
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)")
-    setIsMobile(mq.matches)
+    if (mq.matches) setIsMobile(true)
     const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
     mq.addEventListener("change", handler)
     return () => mq.removeEventListener("change", handler)
@@ -95,44 +92,16 @@ export default function Desktop({ posts }: { posts: PostMeta[] }) {
   const contextMenuItems: MenuItem[] = [
     { label: "New Window", shortcut: "⌘N", onClick: () => toggleWindow("about"), dividerAfter: false },
     { label: "Open Terminal", shortcut: "⌘T", onClick: () => toggleWindow("terminal"), dividerAfter: true },
-    { label: "Replay Boot Animation", onClick: () => { setIsLoaded(false); setLoadProgress(0) }, dividerAfter: false },
     { label: "About this Portfolio", onClick: () => setShowAboutOverlay(true), dividerAfter: false },
     { label: "View Source", onClick: () => window.open(siteConfig.social.github, "_blank"), dividerAfter: true },
     { label: "Contact", onClick: () => toggleWindow("contact") },
   ]
 
-  if (isMobile === null) {
-    return (
-      <div className="fixed inset-0 overflow-hidden desktop-bg">
-        <TwinklingBackground mode="boot" progress={loadProgress} />
-        <Preloader
-          onProgress={setLoadProgress}
-          onComplete={() => setIsLoaded(true)}
-        />
-      </div>
-    )
-  }
-
   if (isMobile) {
     return (
       <div className="relative min-h-screen desktop-bg">
-        <TwinklingBackground mode={isLoaded ? "ambient" : "boot"} progress={loadProgress} />
-        <AnimatePresence>
-          {!isLoaded && (
-            <Preloader
-              onProgress={setLoadProgress}
-              onComplete={() => setIsLoaded(true)}
-            />
-          )}
-        </AnimatePresence>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isLoaded ? 1 : 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          style={{ pointerEvents: isLoaded ? "auto" : "none" }}
-        >
-          <MobileLayout posts={posts} />
-        </motion.div>
+        <TwinklingBackground />
+        <MobileLayout posts={posts} />
       </div>
     )
   }
@@ -151,35 +120,14 @@ export default function Desktop({ posts }: { posts: PostMeta[] }) {
     >
       <div className="album-wallpaper" aria-hidden="true" />
 
-      {/* Twinkling dot matrix background & glitter sparkles */}
-      <TwinklingBackground mode={isLoaded ? "ambient" : "boot"} progress={loadProgress} />
+      {/* Twinkling dot matrix background */}
+      <TwinklingBackground />
 
-      {/* Boot sequence preloader */}
-      <AnimatePresence>
-        {!isLoaded && (
-          <Preloader
-            onProgress={setLoadProgress}
-            onComplete={() => setIsLoaded(true)}
-          />
-        )}
-      </AnimatePresence>
-
-      {/* MenuBar with entrance animation */}
-      <motion.div
-        initial={{ y: -30, opacity: 0 }}
-        animate={{ y: isLoaded ? 0 : -30, opacity: isLoaded ? 1 : 0 }}
-        transition={{ duration: 0.55, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <MenuBar focusedApp={focusedTitle} />
-      </motion.div>
+      {/* MenuBar */}
+      <MenuBar focusedApp={focusedTitle} />
 
       {/* Window layer — every window is driven by the /config/windows.ts registry. */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.96 }}
-        animate={{ opacity: isLoaded ? 1 : 0, scale: isLoaded ? 1 : 0.96 }}
-        transition={{ duration: 0.65, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
-        style={{ pointerEvents: isLoaded ? "auto" : "none" }}
-      >
+      <div>
         {windows.map((win) => {
           const Section = win.component
           // Blogs is the only window that needs extra props (server-fetched post list).
@@ -207,15 +155,10 @@ export default function Desktop({ posts }: { posts: PostMeta[] }) {
             </MacWindow>
           )
         })}
-      </motion.div>
+      </div>
 
-      {/* Desktop widgets with entrance */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isLoaded ? 1 : 0 }}
-        transition={{ duration: 0.6, delay: 0.26, ease: [0.16, 1, 0.3, 1] }}
-        style={{ pointerEvents: isLoaded ? "auto" : "none" }}
-      >
+      {/* Desktop widgets */}
+      <div>
         <QuoteWidget />
         <StatusWidget />
         <LinksWidget />
@@ -224,17 +167,10 @@ export default function Desktop({ posts }: { posts: PostMeta[] }) {
         <ThemeWidget />
         <NowPlaying />
         <GitHubHeatmap />
-      </motion.div>
+      </div>
 
-      {/* Dock with entrance */}
-      <motion.div
-        initial={{ y: 60, opacity: 0 }}
-        animate={{ y: isLoaded ? 0 : 60, opacity: isLoaded ? 1 : 0 }}
-        transition={{ duration: 0.65, delay: 0.2, type: "spring", damping: 22, stiffness: 260 }}
-        style={{ pointerEvents: isLoaded ? "auto" : "none" }}
-      >
-        <Dock openWindows={openWindows} onToggleWindow={toggleWindow} />
-      </motion.div>
+      {/* Dock */}
+      <Dock openWindows={openWindows} onToggleWindow={toggleWindow} />
 
       {/* Right-click context menu */}
       <AnimatePresence>
@@ -299,25 +235,11 @@ export default function Desktop({ posts }: { posts: PostMeta[] }) {
                   </div>
                 ))}
               </div>
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex items-center justify-center">
                 <button
                   type="button"
-                  className="font-mono text-[10px] uppercase tracking-widest px-3 py-2 rounded transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                  className="font-mono text-[10px] uppercase tracking-widest px-5 py-2 rounded transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
                   style={{ background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.75)", border: "1px solid rgba(255,255,255,0.12)" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.13)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.07)")}
-                  onClick={() => {
-                    setShowAboutOverlay(false)
-                    setIsLoaded(false)
-                    setLoadProgress(0)
-                  }}
-                >
-                  ✦ Replay Intro
-                </button>
-                <button
-                  type="button"
-                  className="font-mono text-[10px] uppercase tracking-widest px-4 py-2 rounded transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-                  style={{ background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.5)", border: "1px solid rgba(255,255,255,0.08)" }}
                   onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.12)")}
                   onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.07)")}
                   onClick={() => setShowAboutOverlay(false)}

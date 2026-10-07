@@ -41,17 +41,14 @@ export default function MacWindow({
   const reactId = useId()
   const titleId = `window-title-${windowId ?? reactId}`
 
-  // ── Position persistence ────────────────────────────────────────────
-  // A small dx/dy cached in localStorage so dragging survives reloads.
-  const posKey = windowId ? `${LS_PREFIX}:${windowId}` : null
-  const savedOffset = useRef<{ x: number; y: number }>({ x: 0, y: 0 })
+  // Clear any legacy saved window positions so windows always open at default design position
   useEffect(() => {
-    if (!posKey) return
     try {
-      const raw = localStorage.getItem(posKey)
-      if (raw) savedOffset.current = JSON.parse(raw)
+      Object.keys(localStorage).forEach((key) => {
+        if (key.startsWith(LS_PREFIX)) localStorage.removeItem(key)
+      })
     } catch {}
-  }, [posKey])
+  }, [])
 
   // ── Keyboard: Escape closes the focused window ──────────────────────
   useEffect(() => {
@@ -90,16 +87,10 @@ export default function MacWindow({
           dragListener={false}
           dragMomentum={false}
           dragElastic={0}
-          initial={{ scale: 0.94, opacity: 0, y: 8, x: savedOffset.current.x, ...(savedOffset.current.y ? { y: savedOffset.current.y } : {}) }}
-          animate={{ scale: 1, opacity: 1, x: savedOffset.current.x, y: savedOffset.current.y }}
-          exit={{ scale: 0.94, opacity: 0, y: (savedOffset.current.y || 0) + 8, transition: { duration: 0.12 } }}
-          transition={{ type: "spring", damping: 32, stiffness: 420 }}
+          initial={false}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0, transition: { duration: 0.15 } }}
           onPointerDown={onFocus}
-          onDragEnd={(_, info) => {
-            if (!posKey) return
-            savedOffset.current = { x: info.offset.x + savedOffset.current.x, y: info.offset.y + savedOffset.current.y }
-            try { localStorage.setItem(posKey, JSON.stringify(savedOffset.current)) } catch {}
-          }}
         >
           <div
             data-mac-window

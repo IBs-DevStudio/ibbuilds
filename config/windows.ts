@@ -63,7 +63,7 @@ export interface WindowDef {
 }
 
 export const windows: WindowDef[] = [
-  { id: "about",      title: "About",      icon: User,           width: 560, height: 480, offsetX:   0, offsetY: -20, component: Hero },
+  { id: "about",      title: "About",      icon: User,           width: 560, height: 480, offsetX:   0, offsetY: -65, component: Hero },
   { id: "experience", title: "Experience", icon: Briefcase,      width: 680, height: 570, offsetX:  20, offsetY:  20, component: Experience },
   { id: "projects",   title: "Projects",   icon: Code2,          width: 720, height: 570, offsetX: -20, offsetY:  10, component: Projects },
   { id: "blogs",      title: "Blogs",      icon: BookOpen,       width: 660, height: 550, offsetX:  10, offsetY: -10, component: Blogs },
